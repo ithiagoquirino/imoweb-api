@@ -1,0 +1,5 @@
+{
+  "code" : 7000,
+  "message" : "Parâmetros de entrada inválidos",
+  "description" : "Aqui vão os detalhes do erro"
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+    <http:listener-config name="api-imowebcom-httpListenerConfig" host="${http.host}" port="${http.port}" doc:name="HTTP Listener Configuration"/>
+    <apikit:config name="api-imowebcom-config" raml="api-imowebcom.raml" consoleEnabled="false" doc:name="Router"/>
+    <context:property-placeholder location="commons.properties,${mule.env}.properties"/>
+    <flow name="api-imowebcom-main">
+        <http:listener config-ref="api-imowebcom-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="api-imowebcom-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="api-imowebcom-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="api-imowebcom-console">
+        <http:listener config-ref="api-imowebcom-httpListenerConfig" path="/console/*" doc:name="HTTP"/>
+        <apikit:console config-ref="api-imowebcom-config" doc:name="APIkit Console"/>
+    </flow>
+    <flow name="put:/houses/{houseId}:application/json:api-imowebcom-config">
+        <set-payload value="{&#xA;  &quot;code&quot; : 7000,&#xA;  &quot;message&quot; : &quot;Parâmetros de entrada inválidos&quot;,&#xA;  &quot;description&quot; : &quot;Aqui vão os detalhes do erro&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="delete:/houses/{houseId}:api-imowebcom-config">
+        <set-payload value="{&#xA;  &quot;code&quot; : 7002,&#xA;  &quot;message&quot; : &quot;Recurso não encontrado&quot;,&#xA;  &quot;description&quot; : &quot;Aqui vão os detalhes do erro&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/houses:api-imowebcom-config">
+        <set-payload value="{&#xA;  &quot;houses&quot;: [&#xA;    {&#xA;      &quot;id&quot;: 101,&#xA;      &quot;street&quot;: &quot;Alameda Santos&quot;,&#xA;      &quot;number&quot;: &quot;2277&quot;,&#xA;      &quot;complement&quot;: &quot;Casa A&quot;,&#xA;      &quot;neighborhood&quot;: &quot;Aclimação&quot;,&#xA;      &quot;city&quot;: &quot;São Paulo&quot;,&#xA;      &quot;state&quot;: &quot;São Paulo&quot;,&#xA;      &quot;country&quot;: &quot;Brasil&quot;,&#xA;      &quot;title&quot;: &quot;Casa a venda próximo à Avenida Paulista&quot;,&#xA;      &quot;description&quot;: &quot;Sobrado com 1 sala, 1 cozinha, 2 quartos, 1 suíte 2 banheiro e 1 área de serviço&quot;,&#xA;      &quot;phone&quot;: &quot;55 11 98376-1817&quot;,&#xA;      &quot;price&quot;: 230000&#xA;    },&#xA;    {&#xA;      &quot;id&quot;: 105,&#xA;      &quot;street&quot;: &quot;Rua das Timbaúvas&quot;,&#xA;      &quot;number&quot;: &quot;36&quot;,&#xA;      &quot;complement&quot;: &quot;Residencial Jardins&quot;,&#xA;      &quot;neighborhood&quot;: &quot;Igara&quot;,&#xA;      &quot;city&quot;: &quot;Canoas&quot;,&#xA;      &quot;state&quot;: &quot;Rio Grande do Sul&quot;,&#xA;      &quot;country&quot;: &quot;Brasil&quot;,&#xA;      &quot;title&quot;: &quot;Casa a venda próximo à ULBRA&quot;,&#xA;      &quot;description&quot;: &quot;Sobrado com 1 sala, 1 cozinha, 2 quartos, 2 banheiro e 1 área de serviço, quintal e estacionamento para 2 carros&quot;,&#xA;      &quot;phone&quot;: &quot;55 51 90393-1184&quot;,&#xA;      &quot;price&quot;: 360000&#xA;    }&#xA;  ]&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/houses/{houseId}:api-imowebcom-config">
+        <set-payload value="{&#xA;  &quot;id&quot;: 101,&#xA;  &quot;street&quot;: &quot;Alameda Santos&quot;,&#xA;  &quot;number&quot;: &quot;2277&quot;,&#xA;  &quot;complement&quot;: &quot;Casa A&quot;,&#xA;  &quot;neighborhood&quot;: &quot;Aclimação&quot;,&#xA;  &quot;city&quot;: &quot;São Paulo&quot;,&#xA;  &quot;state&quot;: &quot;São Paulo&quot;,&#xA;  &quot;country&quot;: &quot;Brasil&quot;,&#xA;  &quot;title&quot;: &quot;Casa a venda próximo à Avenida Paulista&quot;,&#xA;  &quot;description&quot;: &quot;Sobrado com 1 sala, 1 cozinha, 2 quartos, 1 suíte 2 banheiro e 1 área de serviço&quot;,&#xA;  &quot;phone&quot;: &quot;55 11 98376-1817&quot;,&#xA;  &quot;price&quot;: 230000&#xA;    }" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/houses:application/json:api-imowebcom-config">
+        <set-payload value="{&#xA;  &quot;code&quot; : 7000,&#xA;  &quot;message&quot; : &quot;Parâmetros de entrada inválidos&quot;,&#xA;  &quot;description&quot; : &quot;Aqui vão os detalhes do erro&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <apikit:mapping-exception-strategy name="api-imowebcom-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+</mule>

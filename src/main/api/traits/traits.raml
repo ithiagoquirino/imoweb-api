@@ -1,0 +1,95 @@
+#%RAML 1.0 Library
+usage:
+
+uses: 
+  imo: ../types/types.raml
+
+traits: 
+  contentCacheable:
+    headers: 
+      If-None-Match?:
+        description: O valor de ETag que foi retornado em chamada anterior
+        type: string
+        example: 25c52f82
+    responses:
+      200:
+        description: O recurso foi alterado desde a última requisição
+        headers: 
+          ETag:
+            type: string
+            example: 25c52f82
+          Cache-Control:
+            type: string
+            example: max-age=3600000
+      304:
+        description: O recurso não foi alterado
+        headers: 
+          ETag:
+            type: string
+            example: 25c52f82
+          Cache-Control:
+            type: string
+            example: max-age=3600000
+
+  paged:
+    description: Realiza a paginação da coleção <<resourcePathName>>
+    queryParameters: 
+      page?: 
+        description: Página corrente.
+        type: integer
+        default: 1
+        minimum: 1
+      limit?:
+        description: Número de registro por páginas.
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 50
+      offset?:
+        description: Posição do registro inicial.
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 500
+
+  filtered:
+    description: Filtra as informações da coleção.
+    queryParameters: 
+      neighborhood?:
+        type: string
+        description: Procura de casa por bairro.
+      city?:
+        type: string
+        description: Procura de casa por cidade.
+      title?:
+        type: string
+        description: Procura de casa pelo título.
+      price?:
+        type: string
+        description: Procura de casa por preço.
+
+  requiresAuthentication:
+    description: Este recurso requer o cabeçalho de autenticação. Apenas a imobiliária tem permissão de execução.
+    headers: 
+      X-Authentication:
+        description: O token de autenticação.
+        type: string
+        example: "40938430974-fneifn-48303f-333-efe"
+    responses: 
+      401:
+        description: "Erro de autenticação"
+        body: 
+          application/json:
+            type: imo.Error
+            example: !include ../examples/error-401.json
+  orderable:
+    description: O campo da coleção a ser ordenado.
+    queryParameters: 
+      sort?:
+        type: string
+        example: <<sortExample>>
+      sortdirection?:
+        description: Ordena pelos parâmetros sort de forma crescente ou decrescente.
+        enum: 
+        - A - Z
+        - Z - A

@@ -1,0 +1,32 @@
+{
+  "houses": [
+    {
+      "id": 101,
+      "street": "Alameda Santos",
+      "number": "2277",
+      "complement": "Casa A",
+      "neighborhood": "Aclimação",
+      "city": "São Paulo",
+      "state": "São Paulo",
+      "country": "Brasil",
+      "title": "Casa a venda próximo à Avenida Paulista",
+      "description": "Sobrado com 1 sala, 1 cozinha, 2 quartos, 1 suíte 2 banheiro e 1 área de serviço",
+      "phone": "55 11 98376-1817",
+      "price": 230000
+    },
+    {
+      "id": 105,
+      "street": "Rua das Timbaúvas",
+      "number": "36",
+      "complement": "Residencial Jardins",
+      "neighborhood": "Igara",
+      "city": "Canoas",
+      "state": "Rio Grande do Sul",
+      "country": "Brasil",
+      "title": "Casa a venda próximo à ULBRA",
+      "description": "Sobrado com 1 sala, 1 cozinha, 2 quartos, 2 banheiro e 1 área de serviço, quintal e estacionamento para 2 carros",
+      "phone": "55 51 90393-1184",
+      "price": 360000
+    }
+  ]
+}

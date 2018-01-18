@@ -1,0 +1,38 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/68e3ffce-fc8d-40bb-a0af-988b6396691a # baseUri: https://mocksvc.mulesoft.com/mocks/06a57642-7759-42ce-b11a-c6e5be1d2f6c # 
+title: API.IMOWEB.COM
+version: 1.0
+
+uses: 
+  imo: types/types.raml
+  trait: traits/traits.raml
+  resourceType: resourceTypes/resourceTypes.raml
+
+documentation: 
+  - title: Home
+    content: !include documents/home.md
+  - title: Houses
+    content: !include documents/houses.md
+
+mediaType: application/json
+
+/houses:
+  type: 
+    resourceType.collection:
+      collectionType: imo.Houses
+      memberType: imo.House
+      collectionResponseExample: !include examples/houses-response.json
+      memberPostExample: !include examples/house-example.json
+      locationHeaderExample: "/houses/101"
+  get:
+    is: [ trait.filtered, {trait.orderable: {sortExample: título}}]
+  post:
+  /{houseId}:
+    type:
+      resourceType.member:
+        memberType: imo.House
+        memberResponseExample: !include examples/house-example.json
+        putRequestExample: !include examples/house-put-request-example.json
+    description: Casa com código Id identificado
+    put:
+    delete:

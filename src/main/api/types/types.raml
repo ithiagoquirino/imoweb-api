@@ -1,0 +1,60 @@
+#%RAML 1.0 Library
+usage:
+
+types: 
+  Error:
+    properties:
+      code:
+        type: integer
+        description: Código do erro
+      message:
+        type: string
+        description: Mensagem do erro
+      description:
+        type: string
+        description: Descrição do erro
+
+  House:
+    properties: 
+      id?:
+        type: integer
+        description: O ID da casa
+      street?:
+        type: string
+        description: A rua do endereço da casa
+      number?:
+        type: string
+        description: O número do endereço da casa
+      complement?:
+        type: string
+        description: O complemento do endereço da casa
+      neighborhood?:
+        type: string
+        description: O bairro do endereço da casa
+      city?:
+        type: string
+        description: A cidade do endereço da casa
+      state?:
+        type: string
+        description: o estado do endereço da casa
+      country?:
+        type: string
+        description: o país do endereço da casa
+      title?:
+        type: string
+        description: O título do anúncio da casa
+      description?:
+        type: string
+        description: A descrição da casa
+      phone?:
+        type: string
+        description: O telefone para contato com o corretor
+      price?:
+        type: number
+        description: O valor da casa
+  
+  Houses:
+    properties: 
+      houses:
+        type: House[]
+        description: A coleção de casas
